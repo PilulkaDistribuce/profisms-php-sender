@@ -1,0 +1,14 @@
+{
+    "name": "pilulka-distribuce/profi-sms-php-sender",
+    "description": "Implementation of profisms.cz API",
+    "type": "library",
+    "require": {
+        "php": "7.1 - 8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ProfiSmsPhpSender\\": "src/"
+        }
+    },
+    "license": "proprietary"
+}
