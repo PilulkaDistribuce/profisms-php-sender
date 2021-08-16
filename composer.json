@@ -3,12 +3,26 @@
     "description": "Implementation of profisms.cz API",
     "type": "library",
     "require": {
-        "php": "7.1 - 8.0"
+        "php": "7.1 - 8.0",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "phpstan/phpstan": "*"
     },
     "autoload": {
         "psr-4": {
             "ProfiSmsPhpSender\\": "src/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ProfiSmsPhpSender\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "stan": "vendor/bin/phpstan analyse src tests --level=8"
     },
     "license": "proprietary"
 }
