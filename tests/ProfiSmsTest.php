@@ -6,20 +6,18 @@ namespace ProfiSmsPhpSender\Tests;
 
 use PHPUnit\Framework\TestCase;
 use ProfiSmsPhpSender\ProfiSms;
-use ProfiSmsPhpSender\ProfiSmsException;
 use ProfiSmsPhpSender\ProfiSmsResponse;
 use ProfiSmsPhpSender\SmsMessage;
 
 class ProfiSmsTest extends TestCase
 {
-
     /** @var ProfiSms */
     private $profiSms;
 
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         // test access
         $this->profiSms = new ProfiSms(
@@ -33,7 +31,6 @@ class ProfiSmsTest extends TestCase
      * @param ProfiSmsResponse $wantedResponse
      *
      * @dataProvider provideSend
-     * @throws ProfiSmsException
      */
     public function testSend(SmsMessage $message, ProfiSmsResponse $wantedResponse): void
     {
@@ -47,11 +44,11 @@ class ProfiSmsTest extends TestCase
     {
         $successJson['error']['code'] = 0;
         $successInfo['http_code'] = 200;
-        $successResponse = new ProfiSmsResponse(true, $successJson, $successInfo);
+        $successResponse = new ProfiSmsResponse(true, 'success', $successJson, $successInfo);
 
         $errorJson['error']['code'] = 202;
         $errorInfo['http_code'] = 200;
-        $errorResponse = new ProfiSmsResponse(false, $errorJson, $errorInfo);
+        $errorResponse = new ProfiSmsResponse(false, 'error', $errorJson, $errorInfo);
 
         return [
             'simple message' => [

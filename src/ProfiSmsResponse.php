@@ -9,6 +9,9 @@ class ProfiSmsResponse
     /** @var bool */
     private $isSuccess;
 
+    /** @var string */
+    private $message;
+
     /** @var array<mixed> */
     private $json;
 
@@ -17,12 +20,18 @@ class ProfiSmsResponse
 
     /**
      * @param bool $isSuccess
+     * @param string $message
      * @param array<mixed> $json
      * @param array<mixed> $info
      */
-    public function __construct(bool $isSuccess, array $json, array $info)
-    {
+    public function __construct(
+        bool $isSuccess,
+        string $message = '',
+        array $json = [],
+        array $info = []
+    ) {
         $this->isSuccess = $isSuccess;
+        $this->message = $message;
         $this->json = $json;
         $this->info = $info;
     }
@@ -32,14 +41,9 @@ class ProfiSmsResponse
         return !$this->isSuccess;
     }
 
-    public function getHttpCode(): int
+    public function getMessage(): string
     {
-        return (int)$this->info['http_code'];
-    }
-
-    public function getErrorCode(): int
-    {
-        return (int)$this->json['error']['code'];
+        return $this->message;
     }
 
     public function getErrorMessage(): string
@@ -50,7 +54,7 @@ class ProfiSmsResponse
     /**
      * @return array<mixed>
      */
-    public function getDebugJson(): array
+    public function getResponseDebugJson(): array
     {
         return $this->json;
     }
@@ -58,7 +62,7 @@ class ProfiSmsResponse
     /**
      * @return array<mixed>
      */
-    public function getDebugInfo(): array
+    public function getResponseDebugConnectionInfo(): array
     {
         return $this->info;
     }

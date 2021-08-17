@@ -30,9 +30,6 @@ class ProfiSms
         $this->url = $url;
     }
 
-    /**
-     * @throws ProfiSmsException
-     */
     public function send(SmsMessage $message): ProfiSmsResponse
     {
         $call = microtime(true);
@@ -51,7 +48,7 @@ class ProfiSms
 
         $curl = curl_init($fullUrl);
         if ($curl === false) {
-            throw new ProfiSmsException('curl_init failed');
+            return new ProfiSmsResponse(false, 'curl_init failed');
         }
 
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -59,7 +56,7 @@ class ProfiSms
         /** @var string|false $response */
         $response = curl_exec($curl);
         if ($response === false) {
-            throw new ProfiSmsException('curl_exec failed');
+            return new ProfiSmsResponse(false, 'curl_exec failed');
         }
 
         $info = curl_getinfo($curl);
@@ -67,13 +64,13 @@ class ProfiSms
 
         $json = json_decode($response, true);
         if ($json === null) {
-            throw new ProfiSmsException('json_decode failed');
+            return new ProfiSmsResponse(false, 'json_decode failed');
         }
 
         if ($info['http_code'] !== 200 || $json['error']['code'] !== 0) {
-            return new ProfiSmsResponse(false, $json, $info);
+            return new ProfiSmsResponse(false, 'returned error code', $json, $info);
         }
 
-        return new ProfiSmsResponse(true, $json, $info);
+        return new ProfiSmsResponse(true, 'success', $json, $info);
     }
 }
