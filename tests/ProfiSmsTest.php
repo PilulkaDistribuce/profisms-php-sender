@@ -12,7 +12,6 @@ use ProfiSmsPhpSender\SmsMessage;
 
 class ProfiSmsTest extends TestCase
 {
-    private const TEST_PHONE_NUMBER = '600000000';
 
     /** @var ProfiSms */
     private $profiSms;
@@ -38,9 +37,7 @@ class ProfiSmsTest extends TestCase
      */
     public function testSend(SmsMessage $message, ProfiSmsResponse $wantedResponse): void
     {
-        $response = $this->profiSms->send($message);
-        var_dump($response);
-        $this->assertSame($wantedResponse->hasError(), $response->hasError());
+        $this->assertSame($wantedResponse->hasError(), $this->profiSms->send($message)->hasError());
     }
 
     /**
@@ -58,7 +55,7 @@ class ProfiSmsTest extends TestCase
 
         return [
             'simple message' => [
-                new SmsMessageTest(self::TEST_PHONE_NUMBER),
+                new SmsMessageTest('600000000'),
                 $successResponse,
             ],
             'simple message with SK international code' => [
