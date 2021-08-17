@@ -48,7 +48,7 @@ class ProfiSmsResponse
 
     public function getErrorMessage(): string
     {
-        return $this->json['error']['message'] ?? '';
+        return $this->json['error']['message'] ?? $this->getMessage();
     }
 
     /**
