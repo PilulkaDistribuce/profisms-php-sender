@@ -41,6 +41,11 @@ class ProfiSmsResponse
         return !$this->isSuccess;
     }
 
+    public function isSuccess(): bool
+    {
+        return $this->isSuccess;
+    }
+
     public function getMessage(): string
     {
         return $this->message;
