@@ -18,16 +18,21 @@ class ProfiSms
     /** @var string */
     private $url;
 
+    /** @var bool */
+    private $delivery;
+
     public function __construct(
         string $username = 'user',
         string $password = 'passwd',
         string $source = '',
-        string $url = 'http://api.profimobilem.cz/index.php?'
+        string $url = 'http://api.profimobilem.cz/index.php?',
+        bool $delivery = false
     ) {
         $this->username = $username;
         $this->password = $password;
         $this->source = $source;
         $this->url = $url;
+        $this->delivery = $delivery;
     }
 
     public function send(SmsMessage $message): ProfiSmsResponse
@@ -43,6 +48,10 @@ class ProfiSms
             'text' => $message->getText(),
             'msisdn' => str_replace(' ', '', $message->getReceiverPhoneNumber()),
         ];
+
+        if($this->delivery){
+            $params["delivery"] = 1;
+        }
 
         $fullUrl = $this->url . http_build_query($params);
 
