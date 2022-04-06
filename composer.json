@@ -3,7 +3,7 @@
     "description": "Implementation of profisms.cz API",
     "type": "library",
     "require": {
-        "php": "7.1 - 8.0",
+        "php": "7.1 - 8.1",
         "ext-curl": "*",
         "ext-json": "*"
     },
@@ -23,7 +23,11 @@
     },
     "scripts": {
         "unit": "vendor/bin/phpunit tests",
-        "stan": "vendor/bin/phpstan analyse src tests --level=8"
+        "stan": "vendor/bin/phpstan analyse src tests --level=8",
+        "tests": [
+            "@unit",
+            "@stan"
+        ]
     },
     "license": "proprietary"
 }
